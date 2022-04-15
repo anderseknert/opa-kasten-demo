@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Modified from docs found at: https://docs.kasten.io/latest/install/other/kind.html
+
 exists=false
 for cluster in $(kind get clusters); do
     if [[ "$cluster" == "k10-demo" ]]; then
@@ -31,9 +33,7 @@ kubectl apply -f ./csi-driver-host-path/examples/csi-storageclass.yaml
 kubectl patch storageclass standard -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"false"}}}'
 kubectl patch storageclass csi-hostpath-sc -p '{"metadata": {"annotations":{"storageclass.kubernetes.io/is-default-class":"true"}}}'
 
-echo "Cleaning up"
 rm -rf csi-driver-host-path
-
 
 echo "Installing Kasten"
 kubectl create namespace kasten-io
